@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <title>Login</title>
+    </header>
+    <body>
+
+
+
+        <form method="post">             
+            {% csrf_token %}
+            {{ form.username }}
+            {{ form.password }}
+          <button type="submit">Log in</button>
+        </form>
+
+
+
+
+        <a href="{% url 'dash:signup' %}">Signup</a>
+
+
+
+
+
+
+
+    </body>
+</html>
