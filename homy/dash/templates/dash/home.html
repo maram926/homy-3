@@ -1,39 +1,321 @@
 {% load static %}
-<!DOCTYPE html>
+ <!DOCTYPE html>
+<html>
+    <header>
+        <title>
+            Home
+        </title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="{% static 'js/js.js' %}"></script>
+    </header>
+    <body class="bg-gray-50">
+
+
+
+        <!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
+        <section class='sticky bg-white z-40 top-0 w-screen grid grid-cols-9 gap-4 justify-items-center items-center drop-shadow-xl'> 
+           <div>
+            <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}">
+           </div>
+           <div><a class="text-stone-500" href="{% url 'dash:chef' %}">All chefs</a></div>
+           {% if user.is_authenticated %}
+              <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
+            {% else %}
+                <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
+                <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
+            {% endif %}
+        </section>
+
+
+         <!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
+        <section class="h-[750px] bg-amber-100 relative top-[-100px] overflow-hidden">
+         
+            
+          <img src="{% static 'images/pexels-photo-13427800.jpeg' %}" >
+           <div class="absolute top-[100px] ">
+            <h1 class=" relative left-[40px] top-[100px] text-stone-500 font-bold text-[60px]">Homey</h1>
+          <span class=" relative left-[40px] top-[100px] text-stone-500 text-[60px]">home made food</span>
+        </div>
+
+        </section>
+
+  
+<!-- ///////////////////////////////////////////// section three  ///////////////////////////////////////////////////// -->
+
+<section class=" h-[550px] overflow-hidden">
+
+   <div class=" w-[500px] relative left-[900px]">
+    <img src="{% static 'images/kisspng-pasta-italian-cuisine-spaghetti-with-meatballs-sto-ferraro-foods-italian-food-distributor-1713927163348-removebg-preview.png' %}">
+   </div> 
+
+    
+   <div class="relative left-[200px] top-[-400px] text-[30px]  w-[400px]">
+    <div id="whyHomey" class="text-center absolute hidden">
+    <h1 class=" text-stone-500">why homey</h1>
+    <div class="text-[15px] mt-[10px]">
+        "Homey is a platform dedicated to bringing the warmth of homemade meals right to your doorstep.
+         Discover diverse, authentic dishes prepared with care by home chefs.
+         Enjoy the flavors of home-cooked food, delivered fresh and conveniently to you."
+    </div>
+    </div>
+
+    <div class="text-center">
+        <h1 class=" text-stone-500">what is homey</h1>
+        <div class="text-[15px] mt-[10px]">
+            "Homey is a platform dedicated to bringing the warmth of homemade meals right to your doorstep.
+             Discover diverse, authentic dishes prepared with care by home chefs.
+             Enjoy the flavors of home-cooked food, delivered fresh and conveniently to you."
+        </div>
+        </div>
+    
+
+    <div class="flex items-center justify-center">
+    <button id="prev" onclick="sectionTwoDivFunction()" class=" text-gray-200">&#x2190;</button>
+    <button >&rarr;</button>
+    </div>
+
+   </div>
+</section>
+
+<!-- ///////////////////////////////////////////// section four  ///////////////////////////////////////////////////// -->
+
+<section class="w-screen flex justify-center bg-amber-100 p-[20px]">
+
+<div class="p-[30px] flex justify-center  w-[1000px] ">
+
+
+    {% for offering in chef_offerings|slice:":3" %}
+    
+    <div class=" drop-shadow-2xl h-[250px] text-center m-[50px] p-[20px] w-[200px] rounded-[20px] bg-slate-50">
+    <div class="relative top-[20px]">{{ offering.name }}</div>
+    <div class="relative top-[40px] left-[10px] mt-[20px] rounded-full overflow-hidden border-amber-100 border-2 w-[130px]"><img src="{{ offering.image.url }}" alt="Chef Offering Image" ></div> 
+    </div>
+    {% endfor %}
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+    </body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
 <html>
     <head>
       <title>Homy</title>
       <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-      
-        <nav class="bg-green-200 w-[300px] relative top-[200px] left-[550px]">
-            <a class="ml-[100px] cursor-pointer" href="#">Home</a>
+        <div class="bg-stone-500 drop-shadow-2xl rounded-r-[50px] w-[60%] h-[50%] left-[37%] absolute">
+            .
+        </div>
+        <div class="absolute overflow-hidden h-[50%] w-[40%] rounded-b-[40%]  m-0 p-0">
+            <img class="relative top-[-200px]" src="{% static 'images/3821e8b03dc0350741b1f4450f6069e8.png' %}" >
+        </div>
+       
+       
+        
 
+        <div class="drop-shadow-2xl w-[60%] h-[75vh] relative left-[60%] transform -translate-x-1/2 bg-yellow-50 top-[10vh] rounded-l-[8%]">
+
+            <h1 class="relative top-[20%] left-[20%] font-serif text-[12vw] text-stone-500  font-bold">Homy</h1>
+
+        </div>
+        
+
+        <nav class=" rounded-l-[20px] w-[30%] relative top-[-72vh] left-[60.10%] flex justify-end space-x-4 pr-[3%]">
+            <a class="cursor-pointer text-lg text-amber-100 hover:text-white font-bold" href="#">Home</a>
+            <a class="cursor-pointer text-lg text-amber-100 hover:text-white font-bold" href="{% url 'dash:chef' %}">Chef</a>
             {% if user.is_authenticated %}
-            <a class="ml-[20px] cursor-pointer" href="{% url 'dash:logout' %}">Log out</a>
+                <a class="cursor-pointer text-lg text-amber-100 hover:text-white font-bold" href="{% url 'dash:logout' %}">Log out</a>
             {% else %}
-            <a class="ml-[20px] cursor-pointer" href="{% url 'dash:login' %}">Log in</a>
+                <a class="cursor-pointer text-lg text-amber-100 hover:text-white font-bold" href="{% url 'dash:login' %}">Log in</a>
             {% endif %}
         </nav>
 
-            <ul class="flex space-x-4 border-2 overflow-hidden h-[200px] w-[400px] relative top-[200px] left-[500px]">
-                <li class="h-[100px] w-[200px]">
-                    <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
-                </li>
-    
-                <li class="h-[100px] w-[200px]">
-                    <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 2">
-                </li>
-    
-                <li class="h-[100px] w-[200px]">
-                    <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 3">
-                </li>
-            </ul>
+
+  
+        
+       
+
+       
+        <div class="relative border-dashed border-b-[10px] border-t-[10px] border-lime-700 top-[30vh] grid justify-items-center  w-screen h-[30vh] mx-auto">
+            <h1 class="font-bold text-[60px] text-stone-500">About us</h1>
+            <div class=" w-3/5 text-lg p-4 text-stone-500">
+                At Homey, we connect you with talented local chefs who bring the warmth and freshness of homemade meals right to your doorstep.
+                We believe that food should not only taste great but also nourish your body and soul.
+                That’s why we focus on quality, health, and convenience.
+            </div>
+        </div>
+
+
+
+        <footer class="w-screen h-[200px] relative top-[500px] bg-yellow-50">
+                     .
+        </footer>
+
+
+
+
+
+
+
+    </body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- {% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Homy</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-amber-100">
+        <div class="drop-shadow-2xl w-[800px] h-[600px] absolute left-[540px] bg-yellow-50 top-[105px] rounded-l-[20px]">.</div>
+        <nav class="bg-amber-100 rounded-r-[20px]  w-[700px] relative top-[120px] left-[100px]   items-end pr-[50px]">
+            <a class=" cursor-pointer relative left-[500px]  text-[20px] text-lime-700 hover:text-amber-700" href="#">Home</a>
+
+            {% if user.is_authenticated %}
+            <a class=" cursor-pointer relative left-[520px] text-lime-700  text-[20px] hover:text-amber-700" href="{% url 'dash:logout' %}">Log out</a>
+            {% else %}
+            <a class=" cursor-pointer text-lime-700 relative left-[520px] text-[20px] hover:text-amber-700" href="{% url 'dash:login' %}">Log in</a>
+            {% endif %}
+        </nav>
+
+        
+
+                     <div class="rounded-t-[100px] relative left-[40px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
+                        <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
+                     </div>
+
+                     <div class="rounded-b-[100px] relative top-[20px] left-[200px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
+                        <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
+                     </div>
+                    
+                     <div class="relative left-[700px] top-[-350px]">
+                     <h1 class="font-serif text-[200px] text-amber-100  font-bold">Homy</h1>
+                    </div>
+
+
+              
+                     <div class=" relative top-[-100px]   grid justify-items-center border-2 w-[1000px] h-[300px]">
+                        <h1 class="font-bold text-[50px] text-lime-700">About us</h1>
+                        <div class="border-2 w-[500px] text-[20px]">
+                            At Homey, we connect you with talented local chefs who bring the warmth and freshness of homemade meals right to your doorstep.
+                             We believe that food should not only taste great but also nourish your body and soul.
+                             That’s why we focus on quality, health, and convenience.
+                        </div>
+                     </div>
 
 
 
   
   
     </body>
-</html>
+</html> -->
