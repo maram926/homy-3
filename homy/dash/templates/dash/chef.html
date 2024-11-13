@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chef</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="{% static 'js/js.js' %}"></script>
+    </head>
+    <body class="bg-slate-50">
+
+
+      <!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
+      <section class='sticky bg-white z-40 top-0 w-screen grid grid-cols-9 gap-4 justify-items-center items-center drop-shadow-xl'> 
+        <div>
+         <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}">
+        </div>
+        <div><a class="text-stone-500" href="{% url 'dash:home' %}">Home</a></div>
+        {% if user.is_authenticated %}
+           <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
+           <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
+         {% else %}
+             <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
+             <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
+         {% endif %}
+     </section>
+   
+
+<!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
+       <div  class=" flex justify-center items-center flex-wrap p-[20px] w-[900px]   mx-auto ">
+
+            {% for offering in chef_offerings %}   
+            <a href="{% url 'dash:menu2' offering.id %}" class="mt-[20px] mx-auto">
+            <div class="border-2 mt-[20px] w-[200px]  mx-auto p-[15px] rounded-[20px] drop-shadow-xl">
+            <div class="overflow-hidden border-2 mx-auto rounded-full w-[100px]">
+            <img class="w-[100px] h-[90px]" src="{{ offering.image.url }}" alt="Chef Offering Image">  
+            </div>
+            <div class="text-center mt-[10px]">
+            {{ offering.name }}
+            </div>
+            </div>
+             </a>
+            {% endfor %}
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+
+
+</html>

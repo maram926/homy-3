@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chef</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-slate-50">
+
+
+      <!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
+      <section class='sticky bg-white z-40 top-0 w-screen grid grid-cols-9 gap-4 justify-items-center items-center drop-shadow-xl'> 
+        <div>
+         <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}">
+        </div>
+        <div><a class="text-stone-500" href="{% url 'dash:home' %}">Home</a></div>
+        {% if user.is_authenticated %}
+           <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
+           <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
+         {% else %}
+             <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
+             <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
+         {% endif %}
+     </section>
+   
+
+<!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
+
+<h1 id="dishName">{{ dish.name }}</h1>
+<img src="{{ dish.image.url }}" alt="{{ dish.name }}">
+<p>{{ dish.description }}</p>
+<p>Price: {{ dish.price }}</p>
+
+<div class="flex" data-id="{{ dish.id }}">
+    <button onclick="addItem(this)" class="increment">+</button>
+    <div class="border-2 quantity">0</div>
+    <button onclick="addItem(this)" class="decrement">-</button>
+</div>
+
+<button class='cursor-pointer' onclick="addToCart()">Add to Cart</button>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+       <script src="{% static 'js/js.js' %}"></script>
+    </body>
+
+
+
+</html>
