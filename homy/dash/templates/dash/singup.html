@@ -12,7 +12,10 @@
 
             {% if user.is_authenticated %}
             <a class=" cursor-pointer text-lime-700  text-[23px] hover:text-amber-700" href="{% url 'dash:logout' %}">Log out</a>
+<<<<<<< HEAD
             <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
+=======
+>>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
             {% else %}
             <a class=" cursor-pointer {% if request.path == '/login/' %}text-amber-700{% else %}text-lime-700{% endif %}  text-[23px] hover:text-amber-700" href="{% url 'dash:login' %}">Log in</a>
             {% endif %}

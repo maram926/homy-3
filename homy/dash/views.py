@@ -58,6 +58,7 @@ def chef(request):
 
 
 
+<<<<<<< HEAD
 
 
 def menu2(request, offering_id):
@@ -75,3 +76,12 @@ def singleDish(request , singleDish_id):
 
 def cart(request):
     return render(request,'dash/cart.html')
+=======
+def menu(request , offering_id):
+    offering = get_object_or_404(ChefOffering, id=offering_id)
+    dishes = offering.dishes.all()
+    return render(request , 'dash/menu.html' , 
+    {'offering': offering},
+    {'dishes': dishes}
+    )
+>>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83

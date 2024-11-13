@@ -17,10 +17,6 @@
         <div><a class="text-stone-500" href="{% url 'dash:home' %}">Home</a></div>
         {% if user.is_authenticated %}
            <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
-<<<<<<< HEAD
-           <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
-=======
->>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
          {% else %}
              <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
              <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
@@ -29,27 +25,15 @@
    
 
 <!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
-<<<<<<< HEAD
-       <div  class=" flex justify-center items-center flex-wrap p-[20px] w-[900px]   mx-auto ">
+       <div class="mt-[20px] flex justify-center border-2 items-center flex-wrap p-[20px] w-[900px]   mx-auto ">
+        <div class="border-2 h-[120px] w-[200px]"><img src="{{ offering.image.url }}" alt="Chef Offering Image"></div>
 
-            {% for offering in chef_offerings %}   
-            <a href="{% url 'dash:menu2' offering.id %}" class="mt-[20px] mx-auto">
-=======
-       <div class=" flex justify-center items-center flex-wrap p-[20px] w-[900px]   mx-auto ">
+        <div class="w-[100%] border-2 text-center mt-[10px]">
+            <h1 class="font-bold text-[30px]">{{ offering.name }}</h1>
+           
 
-            {% for offering in chef_offerings %}   
-            <a href="{% url 'dash:menu' offering.id %}" class="mt-[20px] mx-auto">
->>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
-            <div class="border-2 mt-[20px] w-[200px]  mx-auto p-[15px] rounded-[20px] drop-shadow-xl">
-            <div class="overflow-hidden border-2 mx-auto rounded-full w-[100px]">
-            <img class="w-[100px] h-[90px]" src="{{ offering.image.url }}" alt="Chef Offering Image">  
-            </div>
-            <div class="text-center mt-[10px]">
-            {{ offering.name }}
-            </div>
-            </div>
-             </a>
-            {% endfor %}
+
+        </div>
 
         </div>
 

@@ -20,7 +20,10 @@
            <div><a class="text-stone-500" href="{% url 'dash:chef' %}">All chefs</a></div>
            {% if user.is_authenticated %}
               <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
+<<<<<<< HEAD
               <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
+=======
+>>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
             {% else %}
                 <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
                 <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
