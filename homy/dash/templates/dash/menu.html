@@ -4,7 +4,6 @@
     <head>
         <title>Chef</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="{% static 'js/js.js' %}"></script>
     </head>
     <body class="bg-slate-50">
 
@@ -17,6 +16,7 @@
         <div><a class="text-stone-500" href="{% url 'dash:home' %}">Home</a></div>
         {% if user.is_authenticated %}
            <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
+           <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
          {% else %}
              <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
              <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
@@ -25,31 +25,38 @@
    
 
 <!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
-       <div class="mt-[20px] flex justify-center border-2 items-center flex-wrap p-[20px] w-[900px]   mx-auto ">
-        <div class="border-2 h-[120px] w-[200px]"><img src="{{ offering.image.url }}" alt="Chef Offering Image"></div>
+       
+       <div id="restaurantData" data-restaurant-id="{{ offering.id }}" class="border-2 w-[700px]">
+        
+        <div><img class="w-[100px] h-[90px]" src="{{ offering.image.url }}" alt="Chef Offering Image"></div>
 
-        <div class="w-[100%] border-2 text-center mt-[10px]">
-            <h1 class="font-bold text-[30px]">{{ offering.name }}</h1>
-           
-
-
-        </div>
-
-        </div>
-
-
-
+        {% for dish in dishes %}
+        <a href="{% url 'dash:singleDish' dish.id %}">
+        <div data-dish-id="{{ dish.id }}" class="flex">
+            <img class="w-[100px] h-[90px]" src="{{ dish.image.url }}" alt="{{ dish.name }} Image">
+        <div>{{ dish.name }}</div>
+        <div class="ml-[10px]">{{ dish.price }}</div>
+         </a>
 
 
+         </div>
+        {% endfor %}
 
 
-
-
-
+       </div>
 
 
 
 
+
+
+
+
+
+
+
+
+       <script src="{% static 'js/js.js' %}"></script>
     </body>
 
 

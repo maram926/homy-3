@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-50">
+
+        <!-- Nav Bar -->
+        <section class="sticky top-0 z-40 w-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md py-4">
+            <div class="container mx-auto flex items-center px-6">
+                <!-- Logo -->
+                <div class="mr-8">
+                    <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}" alt="Homey Logo">
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="space-x-6 text-white font-semibold flex items-center">
+                    <a href="{% url 'dash:home' %}" class="hover:text-amber-200 transition duration-200">Home</a>
+                    <a href="{% url 'dash:chef' %}" class="hover:text-amber-200 transition duration-200">All Chefs</a>
+                    <a href="#" class="hover:text-amber-200 transition duration-200">Help</a>
+                </div>
+
+                <!-- User Links -->
+                <div class="space-x-6 text-white font-semibold flex items-center ml-8">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dash:profile' %}" class="hover:text-amber-200 transition duration-200">Profile</a>
+                        <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">Cart</a>
+                        <a href="{% url 'dash:logout' %}" class="hover:text-amber-200 transition duration-200">Log out</a>
+                    {% else %}
+                        <a href="{% url 'dash:login' %}" class="hover:text-amber-200 transition duration-200">Log in</a>
+                        <a href="{% url 'dash:signup' %}" class="hover:text-amber-200 transition duration-200">Create an account</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="container mx-auto mt-16 px-6">
+            <div class="bg-white shadow-md rounded-lg p-8">
+                <h1 class="text-2xl font-semibold text-gray-800 mb-6">My Profile</h1>
+                
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    
+                    <!-- Username -->
+                    <div class="mb-4">
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" id="username" name="username" value="{{ user.username }}" 
+                               class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" name="email" value="{{ user.email }}" 
+                               class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500" required>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="mb-4">
+                        <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone_number" name="phone_number" value="{{ user.phone_number }}" 
+                               class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit" 
+                                class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 rounded-md transition">
+                            Update Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </body>
+</html>

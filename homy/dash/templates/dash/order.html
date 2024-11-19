@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet.js CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static 'js/js.js' %}"></script>
+    <style>
+        .payment-option {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .payment-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .payment-option.selected {
+            border: 2px solid #f59e0b;
+            box-shadow: 0 4px 12px rgba(255, 159, 44, 0.5);
+        }
+        .map-container {
+            position: relative;
+            height: 300px; /* Adjusted height */
+            width: 100%;
+            max-width: 700px; /* Optional: Set max-width */
+            z-index: 0;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .payment-button:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
+<section class="sticky top-0 z-40 w-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md py-4">
+    <div class="container mx-auto flex items-center px-6">
+        <div class="mr-8">
+            <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}" alt="Homey Logo">
+        </div>
+
+        <div class="space-x-6 text-white font-semibold flex items-center">
+            <a href="{% url 'dash:home' %}" class="hover:text-amber-200 transition duration-200">Home</a>
+            <a href="{% url 'dash:chef' %}" class="hover:text-amber-200 transition duration-200">All Chefs</a>
+            <a href="#" class="hover:text-amber-200 transition duration-200">Help</a>
+        </div>
+
+        <div class="space-x-6 text-white font-semibold flex items-center ml-8">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dash:profile' %}" class="hover:text-amber-200 transition duration-200">Profile</a>
+                <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">Cart</a>
+                <a href="{% url 'dash:logout' %}" class="hover:text-amber-200 transition duration-200">Log out</a>
+            {% else %}
+                <a href="{% url 'dash:login' %}" class="hover:text-amber-200 transition duration-200">Log in</a>
+                <a href="{% url 'dash:signup' %}" class="hover:text-amber-200 transition duration-200">Create an account</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- ///////////////////////////////////////////// Map Section (Smaller & Improved) ///////////////////////////////////////////////////// -->
+<section class="py-10">
+    <div class="container mx-auto px-6">
+        <h2 class="text-2xl font-semibold mb-4">Select Your Location</h2>
+        <p class="text-gray-600 mb-6">Use the map to confirm your location or adjust it as needed.</p>
+
+        <!-- Map Container -->
+        <div id="map" class="map-container"></div>
+
+        <!-- Confirmation Button -->
+        <button id="confirm-location" class="bg-amber-500 text-white py-2 px-6 rounded-lg hover:bg-amber-600 transition mt-4">
+            Confirm Location
+        </button>
+
+        <!-- Additional Details -->
+        <div class="mt-6">
+            <label for="driver-instructions" class="block text-gray-700 font-medium mb-2">Additional Details for the Driver</label>
+            <textarea 
+                id="driver-instructions" 
+                rows="4" 
+                class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                placeholder="Provide additional details, e.g., Villa or Apartment, house number, special instructions..."></textarea>
+        </div>
+    </div>
+</section>
+
+<!-- ///////////////////////////////////////////// Payment Method Section (Interactive) ///////////////////////////////////////////////////// -->
+<section class="py-10 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <h2 class="text-2xl font-semibold mb-4">Select Payment Method</h2>
+        
+        <!-- Payment Options -->
+        <div class="grid grid-cols-3 gap-8">
+            <!-- Cash -->
+            <div class="payment-option text-center p-6 border-2 rounded-lg hover:shadow-lg transition duration-200 bg-white"
+                data-method="cash" id="cash-option">
+                <img src="{% static 'images/payment-method.png' %}" alt="Cash Payment" class="mx-auto mb-4 w-16 h-16">
+                <p class="text-lg font-semibold text-gray-800">Cash</p>
+            </div>
+
+            <!-- Credit Card -->
+            <div class="payment-option text-center p-6 border-2 rounded-lg hover:shadow-lg transition duration-200 bg-white"
+                data-method="credit-card" id="credit-card-option">
+                <img src="{% static 'images/credit-card.png' %}" alt="Credit Card Payment" class="mx-auto mb-4 w-16 h-16">
+                <p class="text-lg font-semibold text-gray-800">Credit Card</p>
+            </div>
+
+            <!-- Debit Card -->
+            <div class="payment-option text-center p-6 border-2 rounded-lg hover:shadow-lg transition duration-200 bg-white"
+                data-method="debit-card" id="debit-card-option">
+                <img src="{% static 'images/card.png' %}" alt="Debit Card Payment" class="mx-auto mb-4 w-16 h-16">
+                <p class="text-lg font-semibold text-gray-800">Debit Card</p>
+            </div>
+        </div>
+
+        <!-- Confirm Payment Button -->
+        <button id="confirm-payment" class="payment-button bg-amber-500 text-white py-2 px-6 rounded-lg hover:bg-amber-600 transition mt-6" disabled>
+            Confirm Payment
+        </button>
+    </div>
+</section>
+
+<!-- ///////////////////////////////////////////// Footer ///////////////////////////////////////////////////// -->
+<footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Get in Touch</h4>
+                <p class="mb-2">0000 North, Riyadh, KSA</p>
+                <p>
+                    <a class="text-gray-400 hover:text-white transition" href="tel:+15057922430">(000) 000-0000</a>
+                </p>
+                <p>
+                    <a class="text-gray-400 hover:text-white transition" href="mailto:demo@yourdomain.com">Hello@Homey.com</a>
+                </p>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Learn More</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{% url 'dash:home' %}" class="text-gray-400 hover:text-white transition">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'dash:chef' %}" class="text-gray-400 hover:text-white transition">Chefs</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Our Newsletter</h4>
+                <form class="flex flex-col space-y-4">
+                    <input type="email" placeholder="Email Address" class="px-4 py-2 rounded-md text-gray-800 bg-white border">
+                    <button type="submit" class="bg-amber-500 text-white py-2 px-6 rounded-md hover:bg-amber-600">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([24.7136, 46.6753], 13);
+
+    // Add OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker at the initial location
+    const marker = L.marker([24.7136, 46.6753]).addTo(map);
+
+    // Listen for the map click event and update marker position
+    map.on('click', function(e) {
+        marker.setLatLng(e.latlng);
+    });
+
+    // Handle payment method selection
+    document.querySelectorAll('.payment-option').forEach(option => {
+        option.addEventListener('click', () => {
+            document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+            option.classList.add('selected');
+            // Enable the confirm payment button
+            document.getElementById('confirm-payment').disabled = false;
+        });
+    });
+
+    // Handle confirm payment button
+    document.getElementById('confirm-payment').addEventListener('click', () => {
+        alert('Payment confirmed!');
+    });
+</script>
+
+</body>
+</html>

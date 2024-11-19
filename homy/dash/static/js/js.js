@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 let quantity = document.querySelector('.quantity')
 let increment = document.getElementsByClassName("increment");
 let descremint = document.getElementsByClassName("decrement");
@@ -103,13 +102,3 @@ function clearCart(){
     insaidCart.innerText = "There is nothing in your cart";
 }
 }
-=======
-let sectionTwoDiv = document.getElementsByClassName("sectionTwoDiv");
-let whyHomey = document.getElementById("whyHomey");
-let prev = document.getElementById("prev");
-let next = document.getElementById("next");
-
-function sectionTwoDivFunction() {
-  console.log("back");
-}
->>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83

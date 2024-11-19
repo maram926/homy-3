@@ -52,13 +52,19 @@ def signup_view(request):
 
 
 def chef(request):
-    chef_offerings = ChefOffering.objects.all()
-    return render(request , 'dash/chef.html' , {'chef_offerings': chef_offerings})
+    category = request.GET.get('category')  # Get category from query string
+    search_query = request.GET.get('search')
+    if category:
+        chef_offerings = ChefOffering.objects.filter(category=category)
+    else:
+        chef_offerings = ChefOffering.objects.all()
+    if search_query:
+        chef_offerings = chef_offerings.filter(name__icontains=search_query)    
+    return render(request, 'dash/chef.html', {'chef_offerings': chef_offerings})
+  
 
 
 
-
-<<<<<<< HEAD
 
 
 def menu2(request, offering_id):
@@ -76,12 +82,11 @@ def singleDish(request , singleDish_id):
 
 def cart(request):
     return render(request,'dash/cart.html')
-=======
-def menu(request , offering_id):
-    offering = get_object_or_404(ChefOffering, id=offering_id)
-    dishes = offering.dishes.all()
-    return render(request , 'dash/menu.html' , 
-    {'offering': offering},
-    {'dishes': dishes}
-    )
->>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
+
+
+def order(request):
+    return render(request,'dash/order.html')
+
+@login_required
+def profile(request):
+    return render(request, 'dash/profile.html', {'user': request.user})

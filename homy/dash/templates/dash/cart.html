@@ -5,55 +5,116 @@
         <title>Chef</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="bg-slate-50">
+    <body class="bg-gray-50">
 
+        <!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
+        <section class="sticky top-0 z-40 w-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md py-4">
+            <div class="container mx-auto flex items-center px-6">
+                <!-- Logo -->
+                <div class="mr-8">
+                    <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}" alt="Homey Logo">
+                </div>
 
-      <!-- ////////////////////////////////////////// Nav bar //////////////////////////////////////////////////////// -->
-      <section class='sticky bg-white z-40 top-0 w-screen grid grid-cols-9 gap-4 justify-items-center items-center drop-shadow-xl'> 
-        <div>
-         <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}">
+                <!-- Left Side: Main navigation links -->
+                <div class="space-x-6 text-white font-semibold flex items-center">
+                    <a href="{% url 'dash:home' %}" class="hover:text-amber-200 transition duration-200">Home</a>
+                    <a href="{% url 'dash:chef' %}" class="hover:text-amber-200 transition duration-200">All Chefs</a>
+                    <a href="#" class="hover:text-amber-200 transition duration-200">Help</a>
+                </div>
+
+                <!-- Authentication links -->
+                <div class="space-x-6 text-white font-semibold flex items-center ml-8">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dash:profile' %}" class="hover:text-amber-200 transition duration-200">Profile</a>
+                        <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">Cart</a>
+                        <a href="{% url 'dash:logout' %}" class="hover:text-amber-200 transition duration-200">Log out</a>
+                    {% else %}
+                        <a href="{% url 'dash:login' %}" class="hover:text-amber-200 transition duration-200">Log in</a>
+                        <a href="{% url 'dash:signup' %}" class="hover:text-amber-200 transition duration-200">Create an account</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ///////////////////////////////////////////// Cart Section ///////////////////////////////////////////////////// -->
+        <div class="flex justify-center items-center py-10">
+            <div class="w-[500px] bg-white border-2 rounded-lg shadow-lg p-6">
+                <!-- Cart Items -->
+                <div id="insaidCart" class="space-y-4">
+                    <!-- Dynamically rendered cart items will appear here -->
+                </div>
+
+                <!-- Clear Cart Button -->
+                <button 
+                    onclick="clearCart()" 
+                    class="w-full mt-4 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
+                    Clear Cart
+                </button>
+
+                <!-- Proceed to Order Button -->
+                <a 
+                    href="{% url 'dash:order' %}" 
+                    class="block w-full mt-4 bg-green-500 text-white py-2 rounded-lg text-center hover:bg-green-600 transition">
+                    Proceed to Order
+                </a>
+            </div>
         </div>
-        <div><a class="text-stone-500" href="{% url 'dash:home' %}">Home</a></div>
-        {% if user.is_authenticated %}
-           <div><a class="text-stone-500" href="{% url 'dash:logout' %}">Log out</a></div>
-           <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
-         {% else %}
-             <div><a class="text-stone-500" href="{% url 'dash:login' %}">Log in</a></div>
-             <div><a class="text-stone-500" href="{% url 'dash:signup' %}">create an acount</a></div>
-         {% endif %}
-     </section>
-   
 
-<!-- ///////////////////////////////////////////// section two  ///////////////////////////////////////////////////// -->
-       
+        <!-- footer -->
 
-          <div class='flex justify-center items-center p-[20px]'>
-          <div  class="border-2 w-[500px] cart  ">
-
-
-           <div id='insaidCart'>  </div>
-           <button onclick="clearCart()">Clear cart</button>
-   
-
-          </div>
-        </div>
-
+        <footer class="bg-gray-800 text-white py-10 relative top-[50px]">
+            <div class="container mx-auto px-4">
+                <!-- Get in Touch Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                    <!-- Get in Touch -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Get in Touch</h4>
+                        <p class="mb-2">0000 North, Riyadh, KSA</p>
+                        <p>
+                            <a class="text-gray-400 hover:text-white transition" href="tel:+15057922430">(000) 000-0000</a>
+                        </p>
+                        <p>
+                            <a class="text-gray-400 hover:text-white transition" href="mailto:demo@yourdomain.com">Hello@Homey.com</a>
+                        </p>
+                    </div>
         
-
-
-
-
-
-
-
-
-
-
-
-
-       <script src="{% static 'js/js.js' %}"></script>
+                    <!-- Learn More -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Learn More</h4>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="index.html" class="text-gray-400 hover:text-white transition">Home</a>
+                            </li>
+                            <li>
+                                <a href="chefs.html" class="text-gray-400 hover:text-white transition">Chefs</a>
+                            </li>
+                            <li>
+                                <a href="index.html" class="text-gray-400 hover:text-white transition">Pricing</a>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <!-- Newsletter -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Our Newsletter</h4>
+                        <p class="mb-4">Subscribe to our newsletter to get our news & discounts delivered to you.</p>
+                        <form action="#!" class="flex flex-col space-y-4">
+                            <input type="email" placeholder="Email Address" class="px-4 py-2 rounded-md text-gray-800" required>
+                            <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+        
+                <!-- Copyright -->
+                <div class="border-t border-gray-700 mt-10 pt-4 text-center">
+                    <p>&copy; 2024 Homey. All rights reserved.</p>
+                    <p class="text-sm mt-2">Made with love by the Homey team</p>
+                </div>
+            </div>
+        </footer>
+        
+        <script src="{% static 'js/js.js' %}"></script>
     </body>
-
-
-
 </html>

@@ -1,136 +1,133 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-      <title>Homy</title>
-      <script src="https://cdn.tailwindcss.com"></script>
-    </head>
-    <body class="bg-amber-100">
-        <div class=" w-[900px] h-[100px] absolute left-[540px] bg-yellow-50 top-[105px] rounded-l-[20px]">.</div>
-        <nav class="bg-amber-100 rounded-r-[20px]  w-[700px] relative top-[120px] left-[100px] flex flex-col items-end pr-[50px]">
-            <a class=" cursor-pointer   text-[23px] {% if request.path == '/' %}text-amber-700{% else %}text-lime-700{% endif %} hover:text-amber-700" href="{% url 'dash:home' %}">Home</a>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
 
-            {% if user.is_authenticated %}
-            <a class=" cursor-pointer text-lime-700  text-[23px] hover:text-amber-700" href="{% url 'dash:logout' %}">Log out</a>
-<<<<<<< HEAD
-            <div><a class="text-stone-500 cursor-pointer" href="{% url 'dash:cart' %}">cart</a></div>
-=======
->>>>>>> 41de42c65ccb23278e9cdf1a79e0f0af041dae83
-            {% else %}
-            <a class=" cursor-pointer {% if request.path == '/login/' %}text-amber-700{% else %}text-lime-700{% endif %}  text-[23px] hover:text-amber-700" href="{% url 'dash:login' %}">Log in</a>
-            {% endif %}
-        </nav>
+    <!-- ///////////////////////////////////////////// Nav Bar (Fixed) //////////////////////////////////////////////// -->
+    <section class="sticky top-0 z-40 w-full bg-gradient-to-r from-amber-400 to-amber-500 shadow-md py-4">
+        <div class="container mx-auto flex items-center px-6">
+            <!-- Logo -->
+            <div class="mr-8">
+                <img class="w-[100px] h-[100px]" src="{% static 'images/logo.png' %}" alt="Homey Logo">
+            </div>
+    
+            <!-- Left Side: Main navigation links -->
+            <div class="space-x-6 text-white font-semibold flex items-center">
+                <a href="{% url 'dash:home' %}" class="hover:text-amber-200 transition duration-200">Home</a>
+                <a href="{% url 'dash:chef' %}" class="hover:text-amber-200 transition duration-200">All Chefs</a>
+                <a href="#" class="hover:text-amber-200 transition duration-200">Help</a>
+            </div>
 
-        
+            <!-- Authentication links -->
+            <div class="space-x-6 text-white font-semibold flex items-center ml-8">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dash:profile' %}" class="hover:text-amber-200 transition duration-200">Profile</a>
+                    <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">Cart</a>
+                    <a href="{% url 'dash:logout' %}" class="hover:text-amber-200 transition duration-200">Log out</a>
+                {% else %}
+                    <a href="{% url 'dash:login' %}" class="hover:text-amber-200 transition duration-200">Log in</a>
+                    <a href="{% url 'dash:signup' %}" class="hover:text-amber-200 transition duration-200">Create an account</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
-                     <div class="rounded-t-[100px] relative left-[40px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
-                        <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
-                     </div>
+    <!-- ///////////////////////////////////////////// Hero Section (Image + Welcome Text) //////////////////////////////////////////////// -->
+    <section class="relative h-screen">
+        <!-- Background Image -->
+        <img src="{% static 'images/pexels-photo-13427800.jpeg' %}" alt="Delicious Homemade Food" class="w-full h-full object-cover absolute inset-0">
 
-                     <div class="rounded-b-[100px] relative top-[20px] left-[200px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
-                        <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
-                     </div>
-                    
-                
-                     <form class=" w-[300px] grid place-items-center relative top-[-300px] left-[600px]" method="post">             
-                        {% csrf_token %}
-                        {{ form.username }}
-                        {{ form.password }}
-                      <button class="text-lime-700" type="submit">Log in</button>
-                      <a class="text-lime-700 text-[14px]" href="{% url 'dash:signup' %}">create acount</a>
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+
+       
+    </section>
+
+    <!-- ///////////////////////////////////////////// Login Box Section (Fixed at Top) //////////////////////////////////////////////// -->
+    <section class="absolute top-[200px] left-0 w-full flex justify-center items-start py-16 z-30">
+        <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Login</h2>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" name="username" id="username" class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" name="password" id="password" class="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                </div>
+                <button type="submit" class="w-full py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition duration-200">Log in</button>
+            </form>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'dash:signup' %}" class="text-sm text-amber-500 hover:text-amber-600">Don't have an account? Create one</a>
+            </div>
+        </div>
+    </section>
+
+     <!-- ///////////////////////////////////////////// Footer Section ///////////////////////////////////////////////////// -->
+     <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-4">
+            <!-- Get in Touch Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <!-- Get in Touch -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Get in Touch</h4>
+                    <p class="mb-2">0000 North, Riyadh, KSA</p>
+                    <p>
+                        <a class="text-gray-400 hover:text-white transition" href="tel:+15057922430">(000) 000-0000</a>
+                    </p>
+                    <p>
+                        <a class="text-gray-400 hover:text-white transition" href="mailto:demo@yourdomain.com">Hello@Homey.com</a>
+                    </p>
+                </div>
+    
+                <!-- Learn More -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Learn More</h4>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="index.html" class="text-gray-400 hover:text-white transition">Home</a>
+                        </li>
+                        <li>
+                            <a href="chefs.html" class="text-gray-400 hover:text-white transition">Chefs</a>
+                        </li>
+                        <li>
+                            <a href="index.html" class="text-gray-400 hover:text-white transition">Pricing</a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Our Newsletter</h4>
+                    <p class="mb-4">Subscribe to our newsletter to get our news & discounts delivered to you.</p>
+                    <form action="#!" class="flex flex-col space-y-4">
+                        <input type="email" placeholder="Email Address" class="px-4 py-2 rounded-md text-gray-800" required>
+                        <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-md">
+                            Subscribe
+                        </button>
                     </form>
+                </div>
+            </div>
+    
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 mt-10 pt-4 text-center">
+                <p>&copy; 2024 Homey. All rights reserved.</p>
+                <p class="text-sm mt-2">Made with love by the Homey team</p>
+            </div>
+        </div>
+    </footer>
+    
 
-
-  
-  
-    </body>
+    <script src="{% static 'js/js.js' %}"></script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- {% load static %}
-<!DOCTYPE html>
-<html>
-    <header>
-        <title>Login</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-    </header>
-    <body class="bg-amber-100">
-
-
-        
-
-
-        <form class=" w-[300px] grid place-items-center relative top-[140px] left-[600px]" method="post">             
-            {% csrf_token %}
-            {{ form.username }}
-            {{ form.password }}
-          <button class="text-lime-700" type="submit">Log in</button>
-          <a class="text-lime-700 text-[14px]" href="{% url 'dash:signup' %}">create acount</a>
-        </form>
-
-
-
-
-        
-
-
-        <div class="rounded-t-[100px] relative left-[40px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
-            <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
-         </div>
-
-         <div class="rounded-b-[100px] relative top-[20px] left-[200px] w-[300px] h-[300px] shadow-lg shadow-yellow-500/40 overflow-hidden">
-            <img src="{% static 'images/88f738ae823965453c044d5153f28d86.png' %}" alt="Image 1">
-         </div>
-
-
-
-
-    </body>
-</html> -->

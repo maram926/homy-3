@@ -1,12 +1,16 @@
-from django.db import models
+from django.db import models # type: ignore
 
 
 
 class User(models.Model):
     name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)  # New field for phone number
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    additional_details = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.name 
+        return self.name
 
 
 
