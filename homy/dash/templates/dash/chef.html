@@ -24,7 +24,10 @@
         
                     {% if user.is_authenticated %}
                         <a href="{% url 'dash:profile' %}" class="hover:text-amber-200 transition duration-200">Profile</a>
-                        <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">Cart</a>
+                        <a href="{% url 'dash:cart' %}" class="hover:text-amber-200 transition duration-200">
+                            Cart 
+                            <span id="cartCount" class="ml-2 bg-white text-black rounded-full px-2 py-1 text-sm">0</span>
+                        </a>
                         <a href="{% url 'dash:logout' %}" class="hover:text-amber-200 transition duration-200">Log out</a>
                     {% else %}
                         <a href="{% url 'dash:login' %}" class="hover:text-amber-200 transition duration-200">Log in</a>

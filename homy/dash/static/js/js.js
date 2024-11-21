@@ -3,7 +3,8 @@ let increment = document.getElementsByClassName("increment");
 let descremint = document.getElementsByClassName("decrement");
 let insaidCart = document.getElementById('insaidCart')
 let dishName = document.getElementById('dishName')
-
+let cartCountM = document.getElementById('cartCount')
+let cartCount = localStorage.getItem('cartCount') ? parseInt(localStorage.getItem('cartCount')) : 0;
 
 
 
@@ -72,7 +73,7 @@ function addToCart(){
   window.localStorage.setItem('cart', JSON.stringify(cart));
  
   displayCartItems(cart);
- 
+console.log('hi')
 
 }
 
